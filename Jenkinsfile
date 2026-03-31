@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "amdp-registry.skala-ai.com/skala25a/sk199-devops-1day-app"
+        IMAGE_NAME = "amdp-registry.skala-ai.com/skala25a/sk032-devops-1day-app"
         IMAGE_TAG = "1.0.${BUILD_NUMBER}"
         REGISTRY_CREDENTIALS = "harbor-registry-creds"
     }

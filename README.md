@@ -14,8 +14,8 @@ python app.py
 ## Docker build
 
 ```bash
-docker build -t sk199-devops-1day-app:local .
-docker run --rm -p 5000:5000 sk199-devops-1day-app:local
+docker build -t sk032-devops-1day-app:local .
+docker run --rm -p 5000:5000 sk032-devops-1day-app:local
 ```
 
 ## Jenkins pipeline summary
