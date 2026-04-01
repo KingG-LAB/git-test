@@ -8,6 +8,7 @@ pipeline {
         K8S_NAMESPACE = "class-2"
         DEPLOYMENT_NAME = "sk032-backend"
         CONTAINER_NAME = "app"
+        IMAGE_PLATFORM = "linux/amd64"
     }
 
     stages {
@@ -15,17 +16,12 @@ pipeline {
             steps {
                 sh 'python3 --version'
                 sh 'docker --version'
+                sh 'docker buildx version'
                 sh 'kubectl version --client=true'
             }
         }
 
-        stage('Build Image') {
-            steps {
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
-            }
-        }
-
-        stage('Push To Harbor') {
+        stage('Build And Push Image') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: "${REGISTRY_CREDENTIALS}",
@@ -33,7 +29,8 @@ pipeline {
                     passwordVariable: 'HARBOR_PASSWORD'
                 )]) {
                     sh 'echo "${HARBOR_PASSWORD}" | docker login amdp-registry.skala-ai.com -u "${HARBOR_USER}" --password-stdin'
-                    sh 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
+                    sh 'docker buildx create --name jenkins-builder --use >/dev/null 2>&1 || docker buildx use jenkins-builder'
+                    sh 'docker buildx build --platform ${IMAGE_PLATFORM} -t ${IMAGE_NAME}:${IMAGE_TAG} --push .'
                     sh 'docker logout amdp-registry.skala-ai.com'
                 }
             }
