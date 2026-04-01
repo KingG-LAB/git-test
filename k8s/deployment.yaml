@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sk032-backend
+  namespace: class-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sk032-backend
+  template:
+    metadata:
+      labels:
+        app: sk032-backend
+    spec:
+      imagePullSecrets:
+        - name: harbor-registry-secret
+      containers:
+        - name: app
+          image: amdp-registry.skala-ai.com/skala26a-ai2/sk032-backend:bootstrap
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 15

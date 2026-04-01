@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: ci-pipeline-run-
+  namespace: tekton-demo
+spec:
+  taskRunTemplate:
+    serviceAccountName: tekton-harbor-sa
+  pipelineRef:
+    name: ci-pipeline
+  params:
+    - name: repo-url
+      value: https://github.com/KingG-LAB/git-test.git
+    - name: image-url
+      value: amdp-registry.skala-ai.com/skala26a-ai2/sk032-backend:tekton-demo
+    - name: revision
+      value: main
+  workspaces:
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: tekton-demo-pvc

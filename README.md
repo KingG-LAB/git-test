@@ -1,7 +1,7 @@
 ㅎㅇㅎㅇ
 # DevOps 1day Assignment
 
-This repository contains a minimal Flask application for the Jenkins CI pipeline assignment.
+This repository contains a minimal Flask backend application for the Jenkins/Tekton CI pipeline assignment.
 
 ## Run locally
 
@@ -15,8 +15,8 @@ python app.py
 ## Docker build
 
 ```bash
-docker build -t sk032-devops-1day-app:local .
-docker run --rm -p 5000:5000 sk032-devops-1day-app:local
+docker build -t sk032-backend:local .
+docker run --rm -p 5000:5000 sk032-backend:local
 ```
 
 ## Jenkins pipeline summary
@@ -24,4 +24,4 @@ docker run --rm -p 5000:5000 sk032-devops-1day-app:local
 1. Checkout source from GitHub
 2. Verify build environment
 3. Build Docker image
-4. Push image to Harbor Registry
+4. Push the backend image to Harbor Registry
