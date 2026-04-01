@@ -7,7 +7,7 @@ app = Flask(__name__)
 def home():
     return jsonify(
         {
-            "message": "DevOps 1day assignment app",
+            "message": "DevOps backend auto deploy test",
             "status": "ok",
         }
     )
